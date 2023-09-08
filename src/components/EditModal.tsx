@@ -13,11 +13,15 @@ interface EditTodoProps {
 
 export const EditModal: React.FC<EditTodoProps> = 
     ({ isEdit, onClose, todo, onSave}) => {
+    //TODO型をつける
     const [editedTodo, setEditedTodo] = useState<any>(todo)
+    console.log(editedTodo);
+    
 
     const handleSave = () => {
        if (editedTodo) {
             onSave(editedTodo);
+            //編集が完了したらモーダルを閉じるようにしたい
             onClose();
         }
     };
@@ -33,7 +37,6 @@ export const EditModal: React.FC<EditTodoProps> =
                         value={editedTodo.title}
                         onChange={(e) => setEditedTodo({ ...editedTodo, title: e.target.value })}
                     />
-                    {/* 他のTodoプロパティも編集フォームに追加 */}
                     <button onClick={handleSave}>保存</button>
                     <button onClick={onClose}>キャンセル</button>
                 </>

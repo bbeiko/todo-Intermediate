@@ -14,10 +14,10 @@ const TodoList = () => {
 
 
   //TODO 型定義
-  const handleEdit = (todo: any) => {
-  setSelectedTodo(todo);
-  setIsModalOpen(true);
-  console.log(selectedTodo);
+  const handleEdit = (todo: Todo) => {
+    setSelectedTodo(todo);
+    setIsModalOpen(true);
+    console.log(selectedTodo);
   }
 
 
@@ -38,7 +38,7 @@ const TodoList = () => {
           {todoList.map((todo) => (
             <li key={todo.id}>
               {todo.title}: {todo.status}
-              <button onClick={() => handleEdit(todo)}>編集</button>
+              <button onClick={handleEdit()}>編集</button>
             </li>
           ))}
         </ul>

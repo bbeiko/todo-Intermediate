@@ -23,7 +23,7 @@ const AddTodo = () => {
         setTaskList([...taskList, {
             id: uuidv4(),
             title: todoTitle,
-            status: "notStarted",
+            status: "未着手",
         }]);
         setTodoTitle("");
     };

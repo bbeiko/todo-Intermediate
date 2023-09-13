@@ -9,7 +9,7 @@ import { EditModal } from './EditModal';
 const TodoList = () => {
   const [todoList, setTodoList] = useRecoilState(todoListState);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedTodo, setSelectedTodo] = useState(null);
+  const [selectedTodo, setSelectedTodo] = useState<Todo | null>(null);
   const todoCount = useRecoilValue(todoCountSelector);
 
 
@@ -17,7 +17,6 @@ const TodoList = () => {
   const handleEdit = (todo: Todo) => {
     setSelectedTodo(todo);
     setIsModalOpen(true);
-    console.log(selectedTodo);
   }
 
 
@@ -29,6 +28,9 @@ const TodoList = () => {
     setIsModalOpen(false)
   }
 
+  const handleDelete = (targetTodo: Todo) => {
+    setTodoList(todoList.filter((todo) => todo !== targetTodo));
+  };
 
   return (
     <Box>
@@ -38,7 +40,9 @@ const TodoList = () => {
           {todoList.map((todo) => (
             <li key={todo.id}>
               {todo.title}: {todo.status}
-              <button onClick={handleEdit()}>編集</button>
+              {/* handleEditに引数を渡すためアロー関数で書く */}
+              <button onClick={() => handleEdit(todo)}>編集</button>
+              <button onClick={() => handleDelete(targetTodo)}>削除</button>
             </li>
           ))}
         </ul>

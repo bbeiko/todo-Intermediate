@@ -3,16 +3,10 @@ import { Todo } from "../types/Todo";
 
 export const todoListState = atom<Todo[]>({
     key: "todoState",
-    default: [
-        {
-            id: "",
-            title: "",
-            status: "notStarted",
-            content: "",
-        },
-    ],
+    default: [],
 });
 
+//リストの数を取ってくる
 export const todoCountSelector = selector({
     key: "todoCountSelector",
     get: ({ get }) => {

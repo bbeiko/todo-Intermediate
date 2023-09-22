@@ -24,8 +24,6 @@ export const EditModal: React.FC<EditTodoProps> =
     const handleSave = () => {
        if (editedTodo) {
             onSave(editedTodo);
-            //編集が完了したらモーダルを閉じるようにしたい
-            onClose();
         }
     };
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { Box } from '@chakra-ui/react';
 import { Todo } from '../types/Todo';
-import { todoCountSelector, todoListState } from '../states/TodoListState';
+import { filteredTodoListState, todoCountSelector, todoListFilterState, todoListState } from '../states/TodoListState';
 import { EditModal } from './EditModal';
 
 
@@ -11,9 +11,9 @@ const TodoList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTodo, setSelectedTodo] = useState<Todo | null>(null);
   const todoCount = useRecoilValue(todoCountSelector);
+  const filteredTodoList = useRecoilValue(filteredTodoListState);
 
 
-  //TODO 型定義
   const handleEdit = (todo: Todo) => {
     setSelectedTodo(todo);
     setIsModalOpen(true);
@@ -42,7 +42,7 @@ const TodoList = () => {
               {todo.title}: {todo.status}
               {/* handleEditに引数を渡すためアロー関数で書く */}
               <button onClick={() => handleEdit(todo)}>編集</button>
-              <button onClick={() => handleDelete(targetTodo)}>削除</button>
+              <button onClick={() => handleDelete(todo)}>削除</button>
             </li>
           ))}
         </ul>

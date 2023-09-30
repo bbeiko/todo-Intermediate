@@ -6,36 +6,74 @@ import { Box, Input } from '@chakra-ui/react';
 
 
 const AddTodo = () => {
-    const [todoTitle, setTodoTitle] = useState("");
+    const [todoTitle, setTodoTitle] = useState('');
     const [taskList, setTaskList] = useRecoilState(todoListState);
+    const [todoContent, setTodoContent] = useState('');
+    const [deadline, setDeadline] = useState('');
+    const [error, setError] = useState('');
 
 
     //todoTitleが変化したときのみ以前作ってメモ化した関数を実行
-    const onChange = useCallback(
-        (e: React.ChangeEvent<HTMLInputElement>) => {
-            setTodoTitle(e.target.value)
-        },
-        [todoTitle]
-    );
+    // const onChange = useCallback(
+    //     (e: React.ChangeEvent<HTMLInputElement>) => {
+    //         setTodoTitle(e.target.value)
+    //     },
+    //     [todoTitle]
+    // );
 
 
     const clickAdd = () => {
-        setTaskList([...taskList, {
-            id: uuidv4(),
-            title: todoTitle,
-            status: "未着手",
-        }]);
-        setTodoTitle("");
+        //Todo if文の式の書き方。Titleまたはdeadlineのどちらかでも入力がなければエラーを出したい
+        if(!todoTitle && !deadline) {
+            setError('タイトルと期限は必須です。');
+            return;
+        }
+
+        setTaskList([
+            ...taskList, 
+            {
+                id: uuidv4(),
+                title: todoTitle,
+                content: todoContent,
+                status: "未着手",
+                deadline: deadline,
+            }
+        ]);
+
+        setTodoTitle('');
+        setTodoContent('');
+        setDeadline('');
+        setError('');
     };
     
+    //Todo エラー文赤文字にならず
     return (
         <Box>
+            <span>タイトル</span>
             <Input
                 type="text"
                 className='inputTitle'
-                onChange={onChange}
+                onChange={(e) => setTodoTitle(e.target.value)}
                 value={todoTitle}
             />
+            <span>詳細</span>
+            <Input
+                type="text"
+                className='inputContent'
+                onChange={(e) => setTodoContent(e.target.value)}
+                value={todoContent}
+            />
+
+            <Box>
+                <span>期限</span>
+                <input 
+                    type="date"
+                    name='deadline'
+                    onChange={(e) => setDeadline(e.target.value)}
+                    value={deadline}
+                />
+            </Box>
+            {error && <p color='red'>{error}</p>}
             <button
                 className='addButton'
                 onClick={clickAdd}

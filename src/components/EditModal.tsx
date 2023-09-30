@@ -10,13 +10,12 @@ interface EditTodoProps {
     onSave: (editedTodo: Todo) => void;
 }
 
-
 export const EditModal: React.FC<EditTodoProps> = 
     ({ isEdit, onClose, todo, onSave}) => {
     //TODO型をつける
     const [editedTodo, setEditedTodo] = useState<any>(todo)
     
-    //Prppsのtodoが変わったらeditedTodoを更新 
+    //Propsのtodoが変わったらeditedTodoを更新。return内の{editedTodo && をtrueにできる 
     useEffect (() => {
         setEditedTodo(todo);
     },[todo])
@@ -27,12 +26,12 @@ export const EditModal: React.FC<EditTodoProps> =
         }
     };
 
-
     return (
         <ReactModal isOpen={isEdit} onRequestClose={onClose}>
             <h2>Todoの編集</h2>
             {editedTodo && (
                 <>
+                    <span>タイトル</span>
                     <input
                         type="text"
                         value={editedTodo.title}
@@ -40,6 +39,29 @@ export const EditModal: React.FC<EditTodoProps> =
                             setEditedTodo({ ...editedTodo, title: e.target.value })
                         }
                     />
+                    
+                    <span>詳細</span>
+                    <input
+                        type="text"
+                        value={editedTodo.content}
+                        onChange={(e) => 
+                            setEditedTodo({ ...editedTodo, content: e.target.value })
+                        }
+                    />
+
+                    <Box>
+                        <span>期限</span>
+                        <input 
+                            type="date"
+                            name='deadline'
+                            onChange={(e) => 
+                                setEditedTodo({ ...editedTodo, deadline: e.target.value})
+                            }
+                            value={editedTodo.deadline}
+                        />
+                    </Box>
+
+                    <span>進捗</span>
                     <select
                         value={editedTodo.status}
                         onChange={(e) => 
@@ -50,6 +72,7 @@ export const EditModal: React.FC<EditTodoProps> =
                         <option value='作業中'>作業中</option>
                         <option value='完了'>完了</option>
                     </select>
+                    
                     <button onClick={handleSave}>保存</button>
                     <button onClick={onClose}>キャンセル</button>
                 </>

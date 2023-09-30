@@ -29,39 +29,28 @@ export const filteredTodoListState = selector({
         const list = get(todoListState)
 
         // フィルターによって絞り込んだTodoを取得
-        let fileteredList: Todo[] = [];
+        let filteredList: Todo[] = [];
 
         switch(filter) {
             case 'Show Incomplete':
-                fileteredList = list.filter((todo) => todo.status === '未着手');
+                filteredList = list.filter((todo) => todo.status === '未着手');
                 break;
             case 'Show InProgress':
-                fileteredList = list.filter((todo) => todo.status === '作業中');
+                filteredList = list.filter((todo) => todo.status === '作業中');
                 break;
             case 'Show Completed':
-                fileteredList = list.filter((todo) => todo.status === '完了');
+                filteredList = list.filter((todo) => todo.status === '完了');
                 break;
             default:
-                fileteredList = list;    
+                filteredList = list;    
         }
 
-        const sortedList = fileteredList.sort((a, b) => {
-            if (a.deadline < b.deadline) return -1;
-            if (a.deadline > b.deadline) return 1;
-            return 0;
-        });
+        // 期限で昇降順に並び替える？
+        // const sortedList = fileteredList.sort((a, b) => {
+            
+        // });
 
-        return sortedList;
+        return filteredList;
 
-        // switch(filter) {
-        //     case "Show Incomplete":
-        //         return list.filter((todo) => todo.status === '未着手');
-        //     case "Show InProgress":
-        //         return list.filter((todo) => todo.status === '作業中');
-        //     case "Show Completed":
-        //         return list.filter((todo) => todo.status === '完了');
-        //     default:
-        //         return list;
-        // }
     }
 });

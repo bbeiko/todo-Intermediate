@@ -12,8 +12,7 @@ interface EditTodoProps {
 
 export const EditModal: React.FC<EditTodoProps> = 
     ({ isEdit, onClose, todo, onSave}) => {
-    //TODO型をつける
-    const [editedTodo, setEditedTodo] = useState<any>(todo)
+    const [editedTodo, setEditedTodo] = useState<Todo | null>(todo)
     
     //Propsのtodoが変わったらeditedTodoを更新。return内の{editedTodo && をtrueにできる 
     useEffect (() => {
@@ -65,7 +64,7 @@ export const EditModal: React.FC<EditTodoProps> =
                     <select
                         value={editedTodo.status}
                         onChange={(e) => 
-                            setEditedTodo({ ...editedTodo, status: e.target.value})
+                            setEditedTodo({ ...editedTodo, status: e.target.value as "未着手" | "作業中" | "完了"})
                         }
                     >
                         <option value='未着手'>未着手</option>

@@ -12,19 +12,8 @@ const AddTodo = () => {
     const [deadline, setDeadline] = useState('');
     const [error, setError] = useState('');
 
-
-    //todoTitleが変化したときのみ以前作ってメモ化した関数を実行
-    // const onChange = useCallback(
-    //     (e: React.ChangeEvent<HTMLInputElement>) => {
-    //         setTodoTitle(e.target.value)
-    //     },
-    //     [todoTitle]
-    // );
-
-
     const clickAdd = () => {
-        //Todo if文の式の書き方。Titleまたはdeadlineのどちらかでも入力がなければエラーを出したい
-        if(!todoTitle && !deadline) {
+        if(!todoTitle || !deadline) {
             setError('タイトルと期限は必須です。');
             return;
         }
@@ -46,7 +35,6 @@ const AddTodo = () => {
         setError('');
     };
     
-    //Todo エラー文赤文字にならず
     return (
         <Box>
             <span>タイトル</span>
@@ -73,7 +61,9 @@ const AddTodo = () => {
                     value={deadline}
                 />
             </Box>
-            {error && <p color='red'>{error}</p>}
+
+            {error && <p style={{ color:'red' }}>{error}</p>}
+            
             <button
                 className='addButton'
                 onClick={clickAdd}

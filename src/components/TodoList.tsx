@@ -33,10 +33,15 @@ const TodoList = () => {
     setTodoList(todoList.filter((todo) => todo !== targetTodo));
   };
 
-  //TODO期限の昇順・降順で並び替えできるようにしたい
   const toggleSortOrder = () => {
-    setSortBy({ key: sortBy.key, ascending: !sortBy.ascending });
+    const quantifiedDeadline = todoList.map((todo) => {
+      Number(todo.deadline.replaceAll("-",""))
+    }
+
+    // quantifiedDeadline.sort((a,b) => {})
+ 
   };
+
 
   return (
     <Box>
